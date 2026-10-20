@@ -229,7 +229,7 @@ python "<MOSS_ROOT>\tools\moss_precision.py" --status
 
 ## 反馈
 
-请在 GitHub 仓库的 Issues 中反馈（仓库地址待补充）。提交问题时请附上：
+请在 [GitHub Issues](https://github.com/zkw37461-ops/dsh/issues) 中反馈。提交问题时请附上：
 
 - DSH 版本、插件版本、ComfyUI/`moss-image` 版本；
 - `moss_precision.py --status` 输出；

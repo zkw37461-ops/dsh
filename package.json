@@ -12,6 +12,14 @@
     "fp8",
     "precision"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zkw37461-ops/dsh.git"
+  },
+  "homepage": "https://github.com/zkw37461-ops/dsh#readme",
+  "bugs": {
+    "url": "https://github.com/zkw37461-ops/dsh/issues"
+  },
   "type": "module",
   "main": "lib/index.js",
   "exports": {
