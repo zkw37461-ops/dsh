@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "MOSS Precision",
+    "description": "Pick one of the three MOSS-Image precision combos (DiT and Text Encoder) left of the reasoning-effort control. Switching never downloads or replaces weights; the default is DiT BF16 + Text Encoder BF16."
+  }
+}

@@ -1,0 +1,18 @@
+# Local, machine-specific deployment root for the MOSS-Image installation.
+# Use MOSS_ROOT instead when possible; this file is git-ignored.
+config.local.json
+
+# Node / Python artifacts
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs and OS noise
+*.log
+.DS_Store
+Thumbs.db
+
+# Local scratch
+temp/

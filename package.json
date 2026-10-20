@@ -1,0 +1,46 @@
+{
+  "name": "@local/dsh-moss-precision",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MOSS-Image 三档精度组合（DiT weight_dtype + Text Encoder 启动参数）的 DSH 插件；切换不下载、不替换权重。",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "moss-image",
+    "comfyui",
+    "fp8",
+    "precision"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "server",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "license": "MIT"
+}

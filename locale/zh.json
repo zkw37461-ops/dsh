@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "MOSS 精度组合",
+    "description": "在输入框「推理等级」左侧选择 MOSS-Image 的三档精度组合（DiT 与 Text Encoder）；切换不下载、不替换任何权重文件，未选择时使用 DiT BF16 + Text Encoder BF16。"
+  }
+}

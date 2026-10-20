@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="MOSS precision">
+  <rect width="64" height="64" rx="14" fill="#12161a"/>
+  <rect x="13" y="15" width="38" height="9" rx="4.5" fill="#63e2a4"/>
+  <rect x="13" y="28" width="27" height="9" rx="4.5" fill="#3f9d73"/>
+  <rect x="13" y="41" width="16" height="9" rx="4.5" fill="#2b6049"/>
+  <circle cx="47" cy="45.5" r="3.5" fill="#63e2a4"/>
+</svg>

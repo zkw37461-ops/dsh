@@ -1,0 +1,3 @@
+- insert:
+    - id: moss-precision
+      name: '@local/dsh-moss-precision'
