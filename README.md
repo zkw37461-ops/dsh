@@ -2,6 +2,8 @@
 
 DeepSeek Harness（DSH）插件：在输入框「推理等级」左侧增加一个 **MOSS** 下拉，手动切换
 MOSS-Image 的三档精度组合。切换只改变加载精度，**不下载、不替换任何权重文件**。
+同一个 MOSS 下拉里还提供 **「moss提示词增强」**：读取输入框当前提示词，按
+`moss-image-prompt-skill` 编译后整体写回。
 
 ![输入框里的 MOSS 按钮](docs/assets/ui-composer.png)
 ![三档下拉面板](docs/assets/ui-menu.png)
@@ -10,11 +12,54 @@ MOSS-Image 的三档精度组合。切换只改变加载精度，**不下载、�
 
 - 三档组合：`bf16-bf16`（默认）、`fp8-bf16`、`fp8-fp8`，不含 DiT FP16。
 - 按钮位置：`conversation.input.right`，`order: -10`，紧贴在「推理等级」左侧。
+- MOSS 下拉底部新增动作项 **「moss提示词增强」**（分隔线与三个精度项隔开），
+  触发后用 `moss-image-prompt-skill` 编译输入框提示词并整体替换。
 - 选择状态由界面、CLI（`moss --precision`）与 Agent 工具 `moss_precision` 共享，
   持久化在 `<MOSS_ROOT>/state/precision.json`。
 - 未选择过时自动使用 `bf16-bf16`；DiT 精度随每次请求生效，只有 Text Encoder
   精度变化时才重启本地 ComfyUI。
 - 面板跟随 DSH 主题 token，中英文案跟随界面语言。
+
+## 提示词增强（moss提示词增强）
+
+### 菜单位置
+
+点 **MOSS** 打开的下拉就是现有二级菜单。三个精度单选项下方有一条分隔线，其下就是
+**「moss提示词增强」**。它和精度项共用 `.dshMp_item` 的行高、字号、悬停、聚焦与禁用
+样式，但它是动作项（`role="menuitem"`），不参与精度单选，也不会改变当前精度。
+
+### 触发与替换逻辑
+
+1. 通过 `conversation.input.right` 的标准 props `useInput` 读取输入框当前草稿；
+2. 调 `POST /api/moss-precision/enhance`，请求体 `{ text, sessionId? }`；
+3. 宿主用 `ctx.llm.stream` 调用当前会话（或宿主默认）模型，system prompt 是仓库内
+   [`prompt/moss-image-prompt-skill.md`](prompt/moss-image-prompt-skill.md)——即
+   `moss-image-prompt-skill` 的完整 `SKILL.md`，再加一段一次性输出契约；
+4. 模型返回 Positive / Negative / 采样参数后，客户端用
+   `inputActions.setDraft(text)` **整体替换**输入框内容；成功后菜单自动收起。
+
+> 为什么不做成第二个插件去“注入”这个菜单：DSH 的 slot/菜单 API 没有跨插件向另一个
+> 插件的自绘下拉追加菜单项的入口。MOSS 下拉由本插件注册，在同一客户端入口里新增同级
+> 菜单项最稳妥、样式也最一致；因此增强能力随本插件发布，`cordis.patch.yml` 不变。
+
+### 边界与失败处理
+
+| 情况 | 行为 |
+|---|---|
+| 输入为空 | 底部提示「输入框为空，请先输入提示词」；不发请求，草稿不变 |
+| 输入框不可用（`phase` 非 `plain`、没有 `setDraft`） | 菜单项禁用，说明原因 |
+| 草稿含命令/引用胶囊（`occurrences.length > 0`） | 菜单项禁用，避免整体替换破坏胶囊 |
+| 宿主路由未就绪（旧进程） | 提示「增强接口尚未就绪，请重启 DSH 后重试」；草稿不变 |
+| 模型报错 / 超时 / 空结果 / 达到输出上限 | 底部红点显示宿主返回的原因；草稿保持原样 |
+| 增强期间用户继续输入或发送 | 不覆盖新内容，提示「输入框内容在增强期间已变化」 |
+| 输入超过 8000 字 | 宿主返回 422 并说明上限；草稿不变 |
+
+模型路由按「当前会话的请求头 → 宿主默认模型（`agentDefaultModel` / 旧版
+`agent-default-model` 设置）」解析；解析不到就报 `unconfigured`，不猜模型。
+增强超时 180 秒，输出上限 4096 tokens，`temperature` 0.35。
+
+> **升级提示**：从 1.0.0 升到 1.1.0 后需要**重启一次 DSH**。新增的宿主路由与客户端
+> 菜单项属于新的 JavaScript 模块代次，只刷新页面不足以加载；重启后菜单项出现。
 
 ## 三档组合
 
@@ -98,13 +143,20 @@ Python 解释器默认取 `<MOSS_ROOT>\venv\Scripts\python.exe`，可用 `MOSS_P
 3. 点「安装」，等待 bundle 激活；
 4. 刷新一次页面（`Ctrl+R`），输入框工具栏出现 **MOSS** 按钮。
 
+> **1.1.0 升级/首次安装**：提示词增强新增了一条宿主路由与一个客户端菜单项，
+> 属于新的 JavaScript 模块代次。安装后请**重启一次 DSH**（不是只刷新页面），
+> 再在输入框工具栏点开 MOSS 菜单确认「moss提示词增强」出现。
+
 本地开发时也可以直接安装目录：在「添加插件」里填绝对路径即可。
 
 ### 4. 验证
 
 - 按钮显示当前档位（如 `MOSS 画质`）；
 - 展开后能看到三档与「服务未运行 / 服务运行中 · 实际 TE …」状态行；
-- 宿主路由：`GET http://127.0.0.1:<DSH端口>/api/moss-precision/state` 返回 JSON。
+- 分隔线下方能看到「moss提示词增强」；
+- 宿主路由：`GET http://127.0.0.1:<DSH端口>/api/moss-precision/state` 返回 JSON；
+- `POST .../api/moss-precision/enhance` 用 `{"text":"1girl, beach"}` 返回
+  `{ok:true,value:{text:...}}`（需要已配置可用模型）。
 
 ## 使用
 
@@ -112,6 +164,10 @@ Python 解释器默认取 `<MOSS_ROOT>\venv\Scripts\python.exe`，可用 `MOSS_P
 
 点 **MOSS** → 选择一档。切换中按钮显示「切换中…」；涉及 Text Encoder 时会重启
 ComfyUI（约 1–2 分钟），面板底部会说明是否需要重启。
+
+点 **MOSS** → 分隔线下的 **「moss提示词增强」**：先在输入框写好提示词，再点它；
+菜单项显示「增强中…」，成功后输入框内容被整体替换、菜单自动收起。失败时底部红点
+给出原因，输入框保持原样。
 
 ### 命令行
 
@@ -207,6 +263,17 @@ python "<MOSS_ROOT>\tools\moss_precision.py" --status
   `HostBuffer.read_file_slice failed`；该进程之后仍能生成，但同 seed 输出与干净
   进程不同。遇到加载报错后应重启服务，不要沿用该进程。
 
+### 提示词增强的自动化验证
+
+```bat
+node test\prompt-enhance.test.js
+```
+
+覆盖：SKILL.md 打包完整性、`<raw_input>` 定界转义、输出代码围栏清理、模型路由解析、
+成功/空结果/模型报错/无可用模型，以及宿主 HTTP 路由的 200 与空输入 422。
+不覆盖：真实模型的增强质量、浏览器内的视觉与点击路径（需重启后在页面验证，见下文
+「已知限制」第 8 条）。
+
 ## 已知限制与注意事项
 
 1. **TE FP8 不省内存**：加载时按 fp8 构建，但运行时大部分权重被 ComfyUI 转回
@@ -222,10 +289,26 @@ python "<MOSS_ROOT>\tools\moss_precision.py" --status
    直接 npm 发布需要改名与 registry 凭据。
 7. 插件通过 DSH 的 `webServer` 暴露本机路由；只绑定 loopback，并做 Host/Origin
    校验。与其它本地插件同一信任模型：能访问本机回环的进程即可调用。
+8. **升级/安装后需要重启一次 DSH**：客户端菜单项与宿主 `/enhance` 路由都是新的
+   模块代次，页面刷新不会加载；重启后菜单项出现。重启前的旧进程会返回 404，界面
+   提示「增强接口尚未就绪，请重启 DSH 后重试」。
+9. **增强依赖宿主 LLM 与模型路由**：没有可用模型（`unconfigured`）、模型鉴权失败、
+   超时或返回空结果时都会失败并保留原输入；插件不内置模型，也不猜 provider/model。
+10. **增强结果是纯文本整体替换**：草稿里的 `@文件` / 引用胶囊不会被保留，因此检测到
+    `occurrences` 时直接禁用菜单项，而不是静默丢弃它们。附件（图片）不受影响。
+11. **SKILL.md 是固定快照**：当前打包的是 2026-10-20 版
+    （`SHA-256 0edd654c…`，80,564 字节）。skill 更新后需要替换
+    `prompt/moss-image-prompt-skill.md` 并重启，增强规则才会跟着更新。
+12. **增强质量取决于所选模型**：插件只负责把 SKILL.md 作为 system prompt、把草稿
+    包成 `<raw_input>` 数据，并把模型输出规范化后回填；不同模型的编译质量会有差异。
 
 ## 许可证
 
-[MIT](LICENSE)
+- 插件代码：[MIT](LICENSE)。
+- [`prompt/moss-image-prompt-skill.md`](prompt/moss-image-prompt-skill.md)：按文件
+  frontmatter 声明的 **CC-BY-NC-ND-4.0** 原样分发，**不适用 MIT**，且**不允许商业使用**
+  与演绎；随附声明见 [`prompt/LICENSE`](prompt/LICENSE)。若你要把本插件用于商业场景，
+  需要先取得该文档的额外授权，或移除 `prompt/` 并自行提供替代 skill。
 
 ## 反馈
 

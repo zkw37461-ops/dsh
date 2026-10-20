@@ -1,8 +1,8 @@
 {
   "name": "@local/dsh-moss-precision",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "MOSS-Image 三档精度组合（DiT weight_dtype + Text Encoder 启动参数）的 DSH 插件；切换不下载、不替换权重。",
+  "description": "MOSS-Image 三档精度组合的 DSH 插件，并在 MOSS 菜单中提供「moss提示词增强」：按 moss-image-prompt-skill 编译输入框提示词并整体替换。切换精度不下载、不替换权重。",
   "keywords": [
     "dsh",
     "deepseek-harness",
@@ -10,7 +10,8 @@
     "moss-image",
     "comfyui",
     "fp8",
-    "precision"
+    "precision",
+    "prompt-enhance"
   ],
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
   "files": [
     "lib",
     "server",
+    "prompt",
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
@@ -49,6 +51,9 @@
         "@deepseek-ai/dsh-client-ui-conversation"
       ]
     }
+  },
+  "scripts": {
+    "test": "node test/prompt-enhance.test.js"
   },
   "license": "MIT"
 }

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "MOSS Precision",
-    "description": "Pick one of the three MOSS-Image precision combos (DiT and Text Encoder) left of the reasoning-effort control. Switching never downloads or replaces weights; the default is DiT BF16 + Text Encoder BF16."
+    "title": "MOSS Precision & Prompt Enhance",
+    "description": "Pick one of the three MOSS-Image precision combos (DiT and Text Encoder) left of the reasoning-effort control, and use moss-image-prompt-skill from the MOSS menu to enhance the composer prompt and replace it with the result. Switching precision never downloads or replaces weights."
   }
 }

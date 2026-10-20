@@ -127,3 +127,19 @@ HostBuffer.read_file_slice failed
 复核脚本与部署强耦合（读取本机 `comfyui.log`、PID、服务状态），未随仓库发布；
 本文件给出的协议、命令与原始数据足以复现同一组指标。复现时请保持：每档全新进程、
 固定 seed、外部 0.5 s 采样、生成后等待 6 s 再读 RSS。
+
+## 提示词增强（1.1.0）
+
+`node test/prompt-enhance.test.js` 在本机 Node 24 上 9/9 通过。覆盖：
+
+- 打包的 `prompt/moss-image-prompt-skill.md` 是完整的 SKILL.md，并追加了一次性任务契约；
+- 草稿被包进 `<raw_input>`，草稿内的同名闭合标签会被转义，不能提前闭合；
+- 模型输出外层代码围栏会被去掉，首尾空白会 trim；
+- 路由解析优先会话请求头，其次宿主默认模型；两者都没有时报 `unconfigured`；
+- `enhancePrompt` 在成功、`finish: error`、空结果三种情况下分别返回文本或带原因的
+  失败，且不修改入参；
+- 宿主 `/api/moss-precision/enhance` 路由对正常草稿返回 200 + `{ok:true,value}`，
+  对空草稿返回 422。
+
+未覆盖：真实模型输出的提示词质量；浏览器内的菜单视觉、点击路径与回填后的编辑器
+行为。后者需要在重启 DSH、页面重新加载后人工确认。

@@ -1,0 +1,18 @@
+moss-image-prompt-skill.md
+==========================
+
+This document is redistributed verbatim with the dsh-moss-precision plugin.
+
+License: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0
+         International (CC-BY-NC-ND-4.0), as declared in the file's
+         frontmatter (`license: CC-BY-NC-ND-4.0`).
+         https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+- No modifications are made to the document. The plugin appends its one-shot
+  task frame at runtime and never writes it back to this file.
+- Commercial use is not permitted by this license.
+- Attribution: the document is supplied as part of this plugin; its frontmatter
+  does not record a separate author line. Keep this notice and the frontmatter
+  when redistributing.
+
+The MIT license in the repository root does not apply to this document.
