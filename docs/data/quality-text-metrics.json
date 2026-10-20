@@ -1,0 +1,32 @@
+{
+  "bf16_vs_fp8_dit": {
+    "mae": 16.022,
+    "rmse": 25.647,
+    "psnr_db": 19.95,
+    "max_abs": 211,
+    "p99_abs": 103.0,
+    "pct_gt2": 90.37,
+    "pct_gt8": 59.81,
+    "ssim": 0.7999
+  },
+  "fp8_dit_vs_fp8_both": {
+    "mae": 3.233,
+    "rmse": 7.938,
+    "psnr_db": 30.14,
+    "max_abs": 152,
+    "p99_abs": 35.0,
+    "pct_gt2": 37.86,
+    "pct_gt8": 10.65,
+    "ssim": 0.9684
+  },
+  "bf16_vs_fp8_both": {
+    "mae": 16.224,
+    "rmse": 26.179,
+    "psnr_db": 19.77,
+    "max_abs": 223,
+    "p99_abs": 106.0,
+    "pct_gt2": 91.05,
+    "pct_gt8": 59.05,
+    "ssim": 0.8007
+  }
+}

@@ -1,0 +1,428 @@
+{
+  "captured_at": "2026-10-20 (Asia/Shanghai)",
+  "conditions": {
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "vram_mib": 8151,
+    "resolution": "512x512",
+    "steps": 8,
+    "seed_run_a": 42,
+    "seed_run_b": 43,
+    "prompt_run_a": "a single red apple on a white ceramic plate, soft studio light",
+    "prompt_run_b": "a blue ceramic mug on a wooden table, soft daylight",
+    "fresh_service_per_mode": true,
+    "service_flags": "--lowvram --disable-async-offload --bf16-unet --<te>-text-enc",
+    "sampling_interval_s": 0.5,
+    "sampler": "nvidia-smi memory.used + psutil process RSS, external to ComfyUI",
+    "rss_definition": "working set (psutil rss); rss_after sampled 6 s after completion"
+  },
+  "modes": {
+    "bf16-bf16": {
+      "requested": {
+        "dit_weight_dtype": "bf16",
+        "text_encoder_dtype": "bf16"
+      },
+      "load_log": [
+        "model weight dtype torch.bfloat16, manual cast: None",
+        "CLIP/text encoder model load device: cpu, offload device: cpu, current: cpu, dtype: torch.bfloat16"
+      ],
+      "in_process_parameters": {
+        "dit": [
+          [
+            "torch.bfloat16",
+            462
+          ]
+        ],
+        "text_encoder": [
+          [
+            "torch.bfloat16",
+            759
+          ],
+          [
+            "torch.float32",
+            1
+          ]
+        ]
+      },
+      "cold_runs": [
+        {
+          "phase": "cold",
+          "pass": "pass1",
+          "tag": "run1_cold",
+          "seed": 42,
+          "elapsed_s": 59.61,
+          "vram_baseline_mib": 1453,
+          "vram_peak_mib": 7406,
+          "rss_peak_mib": 21795.7,
+          "rss_after_mib": 20416.0,
+          "private_peak_mib": 38676.6,
+          "sha256": "b74772e4343df9dce330649f98f57781f9f31986c3a01f12f45a8bef6abf0aef"
+        },
+        {
+          "phase": "cold",
+          "pass": "pass2",
+          "tag": "cold_rep2",
+          "seed": 42,
+          "elapsed_s": 62.86,
+          "vram_baseline_mib": 1366,
+          "vram_peak_mib": 7392,
+          "rss_peak_mib": 24293.4,
+          "rss_after_mib": 21441.0,
+          "private_peak_mib": 39874.2,
+          "sha256": "b74772e4343df9dce330649f98f57781f9f31986c3a01f12f45a8bef6abf0aef"
+        }
+      ],
+      "warm_runs": [
+        {
+          "phase": "warm",
+          "pass": "pass1",
+          "tag": "run2_warm",
+          "seed": 43,
+          "elapsed_s": 21.7,
+          "vram_baseline_mib": 6606,
+          "vram_peak_mib": 7434,
+          "rss_peak_mib": 21635.8,
+          "rss_after_mib": 20999.4,
+          "private_peak_mib": 38684.1,
+          "sha256": "fab9d76d8066db8940d392d87bccff8f285ab20828fdd5141efa74ac5fac7e11"
+        }
+      ],
+      "controls": [
+        {
+          "phase": "control",
+          "pass": "pass1",
+          "tag": "run1_control",
+          "seed": 42,
+          "elapsed_s": 21.75,
+          "vram_baseline_mib": 6430,
+          "vram_peak_mib": 7454,
+          "rss_peak_mib": 21722.5,
+          "rss_after_mib": 20869.6,
+          "private_peak_mib": 38796.3,
+          "sha256": "b74772e4343df9dce330649f98f57781f9f31986c3a01f12f45a8bef6abf0aef"
+        }
+      ],
+      "outputs_distinct_from_bf16": false
+    },
+    "fp8-bf16": {
+      "requested": {
+        "dit_weight_dtype": "fp8_e4m3fn",
+        "text_encoder_dtype": "bf16"
+      },
+      "load_log": [
+        "model weight dtype torch.float8_e4m3fn, manual cast: torch.bfloat16",
+        "CLIP/text encoder model load device: cpu, offload device: cpu, current: cpu, dtype: torch.bfloat16"
+      ],
+      "in_process_parameters": {
+        "dit": [
+          [
+            "torch.bfloat16",
+            462
+          ]
+        ],
+        "text_encoder": [
+          [
+            "torch.bfloat16",
+            759
+          ],
+          [
+            "torch.float32",
+            1
+          ]
+        ]
+      },
+      "cold_runs": [
+        {
+          "phase": "cold",
+          "pass": "pass1",
+          "tag": "run1_cold",
+          "seed": 42,
+          "elapsed_s": 60.33,
+          "vram_baseline_mib": 1370,
+          "vram_peak_mib": 6757,
+          "rss_peak_mib": 24297.2,
+          "rss_after_mib": 21797.8,
+          "private_peak_mib": 39420.4,
+          "sha256": "2c9899213deab086dd3a5b47abacc4d5d570a517270c722e0f83980c0e5b1465"
+        },
+        {
+          "phase": "cold",
+          "pass": "pass2",
+          "tag": "cold_rep2",
+          "seed": 42,
+          "elapsed_s": 66.05,
+          "vram_baseline_mib": 1361,
+          "vram_peak_mib": 6747,
+          "rss_peak_mib": 23636.7,
+          "rss_after_mib": 21430.6,
+          "private_peak_mib": 38864.0,
+          "sha256": "2c9899213deab086dd3a5b47abacc4d5d570a517270c722e0f83980c0e5b1465"
+        }
+      ],
+      "warm_runs": [
+        {
+          "phase": "warm",
+          "pass": "pass1",
+          "tag": "run2_warm",
+          "seed": 43,
+          "elapsed_s": 18.75,
+          "vram_baseline_mib": 6212,
+          "vram_peak_mib": 7236,
+          "rss_peak_mib": 21986.1,
+          "rss_after_mib": 21197.0,
+          "private_peak_mib": 38063.2,
+          "sha256": "f27cd48ccb40ddb559d482a4ec9970a9f6e070c58d44178d4e48597b7adf37cc"
+        }
+      ],
+      "controls": [],
+      "outputs_distinct_from_bf16": true
+    },
+    "fp8-fp8": {
+      "requested": {
+        "dit_weight_dtype": "fp8_e4m3fn",
+        "text_encoder_dtype": "fp8_e4m3fn"
+      },
+      "load_log": [
+        "model weight dtype torch.float8_e4m3fn, manual cast: torch.bfloat16",
+        "CLIP/text encoder model load device: cpu, offload device: cpu, current: cpu, dtype: torch.float8_e4m3fn"
+      ],
+      "in_process_parameters": {
+        "dit": [
+          [
+            "torch.bfloat16",
+            462
+          ]
+        ],
+        "text_encoder": [
+          [
+            "torch.bfloat16",
+            470
+          ],
+          [
+            "torch.float32",
+            265
+          ],
+          [
+            "torch.float8_e4m3fn",
+            25
+          ]
+        ]
+      },
+      "cold_runs": [
+        {
+          "phase": "cold",
+          "pass": "pass1",
+          "tag": "run1_cold",
+          "seed": 42,
+          "elapsed_s": 62.94,
+          "vram_baseline_mib": 1370,
+          "vram_peak_mib": 6756,
+          "rss_peak_mib": 24191.5,
+          "rss_after_mib": 22009.5,
+          "private_peak_mib": 39316.0,
+          "sha256": "c56e462e04a9a29c71c2b89c9bb58d0b1ebdd38613318569ba702f1f7f428ae6"
+        },
+        {
+          "phase": "cold",
+          "pass": "pass2",
+          "tag": "cold_rep2",
+          "seed": 42,
+          "elapsed_s": 63.31,
+          "vram_baseline_mib": 1361,
+          "vram_peak_mib": 6747,
+          "rss_peak_mib": 23703.2,
+          "rss_after_mib": 21998.3,
+          "private_peak_mib": 39864.7,
+          "sha256": "c56e462e04a9a29c71c2b89c9bb58d0b1ebdd38613318569ba702f1f7f428ae6"
+        },
+        {
+          "phase": "cold",
+          "pass": "pass3",
+          "tag": "A1",
+          "seed": 42,
+          "elapsed_s": 63.14,
+          "vram_baseline_mib": 1393,
+          "vram_peak_mib": 6779,
+          "rss_peak_mib": 24419.0,
+          "rss_after_mib": 21891.2,
+          "private_peak_mib": 39221.6,
+          "sha256": "c56e462e04a9a29c71c2b89c9bb58d0b1ebdd38613318569ba702f1f7f428ae6"
+        }
+      ],
+      "warm_runs": [
+        {
+          "phase": "warm",
+          "pass": "pass1",
+          "tag": "run2_warm",
+          "seed": 43,
+          "elapsed_s": 21.88,
+          "vram_baseline_mib": 6148,
+          "vram_peak_mib": 6692,
+          "rss_peak_mib": 22205.2,
+          "rss_after_mib": 21222.4,
+          "private_peak_mib": 37829.9,
+          "sha256": "7968a879ff06a29a3d6a7fda7d88684eaab6289938ec6ed1113cbe5d941a8c52"
+        },
+        {
+          "phase": "warm",
+          "pass": "pass3",
+          "tag": "B1",
+          "seed": 43,
+          "elapsed_s": 18.73,
+          "vram_baseline_mib": 6520,
+          "vram_peak_mib": 7452,
+          "rss_peak_mib": 22086.8,
+          "rss_after_mib": 21239.7,
+          "private_peak_mib": 37814.9,
+          "sha256": "7968a879ff06a29a3d6a7fda7d88684eaab6289938ec6ed1113cbe5d941a8c52"
+        }
+      ],
+      "controls": [
+        {
+          "phase": "control",
+          "pass": "pass3",
+          "tag": "A2_control",
+          "seed": 42,
+          "elapsed_s": 18.66,
+          "vram_baseline_mib": 6385,
+          "vram_peak_mib": 7185,
+          "rss_peak_mib": 21434.5,
+          "rss_after_mib": 21240.4,
+          "private_peak_mib": 37837.6,
+          "sha256": "c56e462e04a9a29c71c2b89c9bb58d0b1ebdd38613318569ba702f1f7f428ae6"
+        }
+      ],
+      "outputs_distinct_from_bf16": true
+    }
+  },
+  "weights": {
+    "files": 25,
+    "snapshot": "size + mtime per file",
+    "changed": []
+  },
+  "quality": {
+    "apple": {
+      "seed": 42,
+      "pairs": {
+        "42": {
+          "bf16_vs_fp8_dit": {
+            "mae": 3.941,
+            "rmse": 7.622,
+            "psnr_db": 30.49,
+            "max_abs": 171,
+            "p99_abs": 24.0,
+            "pct_gt2": 49.63,
+            "pct_gt8": 20.97,
+            "ssim": 0.982
+          },
+          "fp8_dit_vs_fp8_both": {
+            "mae": 3.078,
+            "rmse": 6.814,
+            "psnr_db": 31.46,
+            "max_abs": 172,
+            "p99_abs": 27.0,
+            "pct_gt2": 37.52,
+            "pct_gt8": 9.71,
+            "ssim": 0.9754
+          },
+          "bf16_vs_fp8_both": {
+            "mae": 5.272,
+            "rmse": 9.14,
+            "psnr_db": 28.91,
+            "max_abs": 185,
+            "p99_abs": 37.0,
+            "pct_gt2": 62.97,
+            "pct_gt8": 26.9,
+            "ssim": 0.9645
+          }
+        },
+        "43": {
+          "bf16_vs_fp8_dit": {
+            "mae": 8.886,
+            "rmse": 14.384,
+            "psnr_db": 24.97,
+            "max_abs": 180,
+            "p99_abs": 53.0,
+            "pct_gt2": 93.27,
+            "pct_gt8": 42.04,
+            "ssim": 0.9489
+          },
+          "fp8_dit_vs_fp8_both": {
+            "mae": 2.806,
+            "rmse": 4.249,
+            "psnr_db": 35.57,
+            "max_abs": 84,
+            "p99_abs": 14.0,
+            "pct_gt2": 59.76,
+            "pct_gt8": 4.49,
+            "ssim": 0.9922
+          },
+          "bf16_vs_fp8_both": {
+            "mae": 8.282,
+            "rmse": 13.284,
+            "psnr_db": 25.66,
+            "max_abs": 177,
+            "p99_abs": 50.0,
+            "pct_gt2": 92.69,
+            "pct_gt8": 41.81,
+            "ssim": 0.9519
+          }
+        }
+      },
+      "asset": "docs/assets/compare-apple-seed42.png"
+    },
+    "text": {
+      "prompt": "一张咖啡店门口的黑色小黑板特写，黑板上用白色粉笔手写着「今日咖啡」四个大字，粉笔字清晰工整，黑板下方放着一杯拿铁，写实摄影，柔和的自然光。",
+      "steps": 20,
+      "seed": 42,
+      "shas": {
+        "bf16-bf16": "770ba8020724",
+        "fp8-bf16": "a06e7308e8e1",
+        "fp8-fp8": "82ac8d48e751"
+      },
+      "pairs": {
+        "bf16_vs_fp8_dit": {
+          "mae": 16.022,
+          "rmse": 25.647,
+          "psnr_db": 19.95,
+          "max_abs": 211,
+          "p99_abs": 103.0,
+          "pct_gt2": 90.37,
+          "pct_gt8": 59.81,
+          "ssim": 0.7999
+        },
+        "fp8_dit_vs_fp8_both": {
+          "mae": 3.233,
+          "rmse": 7.938,
+          "psnr_db": 30.14,
+          "max_abs": 152,
+          "p99_abs": 35.0,
+          "pct_gt2": 37.86,
+          "pct_gt8": 10.65,
+          "ssim": 0.9684
+        },
+        "bf16_vs_fp8_both": {
+          "mae": 16.224,
+          "rmse": 26.179,
+          "psnr_db": 19.77,
+          "max_abs": 223,
+          "p99_abs": 106.0,
+          "pct_gt2": 91.05,
+          "pct_gt8": 59.05,
+          "ssim": 0.8007
+        }
+      },
+      "asset": "docs/assets/compare-text-zoom-2x.png"
+    }
+  },
+  "anomalies": [
+    {
+      "mode": "fp8-fp8",
+      "stage": "first cold generation of one process",
+      "error": "HostBuffer.read_file_slice failed",
+      "note": "该进程未复位；随后同 seed 输出与干净进程不同（1cca065d… / 9d7c8398…）。其余 3 个干净进程可复现 c56e462e… / 7968a879…。",
+      "clean_sha256_seed42": "c56e462e04a9a29c71c2b89c9bb58d0b1ebdd38613318569ba702f1f7f428ae6",
+      "failed_process_sha256_seed42": "1cca065dd85db6605152895caebba601ed26367677776e1417019dfef6710d8f",
+      "failed_process_sha256_seed43": "9d7c839827278d88b5b73e7027d3b05bce5f42a0387ac6b4f7a259ad32a59c8c"
+    }
+  ]
+}

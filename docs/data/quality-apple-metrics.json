@@ -1,0 +1,66 @@
+{
+  "42": {
+    "bf16_vs_fp8_dit": {
+      "mae": 3.941,
+      "rmse": 7.622,
+      "psnr_db": 30.49,
+      "max_abs": 171,
+      "p99_abs": 24.0,
+      "pct_gt2": 49.63,
+      "pct_gt8": 20.97,
+      "ssim": 0.982
+    },
+    "fp8_dit_vs_fp8_both": {
+      "mae": 3.078,
+      "rmse": 6.814,
+      "psnr_db": 31.46,
+      "max_abs": 172,
+      "p99_abs": 27.0,
+      "pct_gt2": 37.52,
+      "pct_gt8": 9.71,
+      "ssim": 0.9754
+    },
+    "bf16_vs_fp8_both": {
+      "mae": 5.272,
+      "rmse": 9.14,
+      "psnr_db": 28.91,
+      "max_abs": 185,
+      "p99_abs": 37.0,
+      "pct_gt2": 62.97,
+      "pct_gt8": 26.9,
+      "ssim": 0.9645
+    }
+  },
+  "43": {
+    "bf16_vs_fp8_dit": {
+      "mae": 8.886,
+      "rmse": 14.384,
+      "psnr_db": 24.97,
+      "max_abs": 180,
+      "p99_abs": 53.0,
+      "pct_gt2": 93.27,
+      "pct_gt8": 42.04,
+      "ssim": 0.9489
+    },
+    "fp8_dit_vs_fp8_both": {
+      "mae": 2.806,
+      "rmse": 4.249,
+      "psnr_db": 35.57,
+      "max_abs": 84,
+      "p99_abs": 14.0,
+      "pct_gt2": 59.76,
+      "pct_gt8": 4.49,
+      "ssim": 0.9922
+    },
+    "bf16_vs_fp8_both": {
+      "mae": 8.282,
+      "rmse": 13.284,
+      "psnr_db": 25.66,
+      "max_abs": 177,
+      "p99_abs": 50.0,
+      "pct_gt2": 92.69,
+      "pct_gt8": 41.81,
+      "ssim": 0.9519
+    }
+  }
+}
